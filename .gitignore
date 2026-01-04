@@ -1,6 +1,3 @@
 /libs
 /obj
-/busybox
-/jni/pcre
-/jni/selinux
 *.zip
