@@ -1,6 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
-# libselinux.a
+# libselinux.a (can be disabled temporarily with DISABLE_SELINUX=1)
+ifneq ($(DISABLE_SELINUX),1)
 include $(CLEAR_VARS)
 LOCAL_MODULE:= libselinux
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/selinux/libselinux/include
@@ -41,6 +42,7 @@ LOCAL_SRC_FILES := \
     selinux/libselinux/src/getenforce.c \
     selinux/libselinux/src/getfilecon.c \
     selinux/libselinux/src/getpeercon.c \
+    selinux/libselinux/src/hashtab.c \
     selinux/libselinux/src/init.c \
     selinux/libselinux/src/is_customizable_type.c \
     selinux/libselinux/src/label.c \
@@ -70,6 +72,7 @@ LOCAL_SRC_FILES := \
     selinux/libselinux/src/stringrep.c \
     selinux/libselinux/src/validatetrans.c
 include $(BUILD_STATIC_LIBRARY)
+endif
 
 # libpcre2.a
 include $(CLEAR_VARS)
