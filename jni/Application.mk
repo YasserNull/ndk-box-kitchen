@@ -1,4 +1,4 @@
-APP_ABI := arm64-v8a
+APP_ABI := armeabi-v7a arm64-v8a x86 x86_64 riscv64
 APP_PIE := true
 APP_PLATFORM := android-21
 APP_CFLAGS := -Wall -O2 -fomit-frame-pointer -flto -DPSTM_NO_ASM -DDISABLE_PSTM_X86
