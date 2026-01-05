@@ -344,11 +344,6 @@ static void xorbuf3(void *dst, const void *src1, const void *src2, unsigned coun
 		*d++ = *s1++ ^ *s2++;
 }
 
-void FAST_FUNC xorbuf(void *dst, const void *src, unsigned count)
-{
-	xorbuf3(dst, dst, src, count);
-}
-
 void FAST_FUNC xorbuf_aligned_AES_BLOCK_SIZE(void *dst, const void *src)
 {
 	unsigned long *d = dst;
@@ -408,13 +403,12 @@ typedef struct hmac_precomputed {
 	md5sha_ctx_t hashed_key_xor_opad;
 } hmac_precomputed_t;
 
-typedef void md5sha_begin_func(md5sha_ctx_t *ctx) FAST_FUNC;
 #if !ENABLE_FEATURE_TLS_SHA1
-#define hmac_begin(pre,key,key_size,begin) \
-	hmac_begin(pre,key,key_size)
+#define hmac_begin_precomputed(pre,key,key_size,begin) \
+	hmac_begin_precomputed(pre,key,key_size)
 #define begin sha256_begin
 #endif
-static void hmac_begin(hmac_precomputed_t *pre, uint8_t *key, unsigned key_size, md5sha_begin_func *begin)
+static void hmac_begin_precomputed(hmac_precomputed_t *pre, uint8_t *key, unsigned key_size, md5sha_begin_func *begin)
 {
 	uint8_t key_xor_ipad[SHA_INSIZE];
 	uint8_t key_xor_opad[SHA_INSIZE];
@@ -504,7 +498,7 @@ static unsigned hmac(tls_state_t *tls, uint8_t *out, uint8_t *key, unsigned key_
 
 	va_start(va, key_size);
 
-	hmac_begin(&pre, key, key_size,
+	hmac_begin_precomputed(&pre, key, key_size,
 			(ENABLE_FEATURE_TLS_SHA1 && tls->MAC_size == SHA1_OUTSIZE)
 				? sha1_begin
 				: sha256_begin
@@ -569,7 +563,7 @@ static void prf_hmac_sha256(/*tls_state_t *tls,*/
 #define SEED   label, label_size, seed, seed_size
 #define A      a, MAC_size
 
-	hmac_begin(&pre, secret, secret_size, sha256_begin);
+	hmac_begin_precomputed(&pre, secret, secret_size, sha256_begin);
 
 	/* A(1) = HMAC_hash(secret, seed) */
 	hmac_sha_precomputed(&pre, a, SEED, NULL);

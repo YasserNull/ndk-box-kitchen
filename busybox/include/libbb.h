@@ -2191,6 +2191,30 @@ enum {
 	SHA3_OUTSIZE   = 28,
 };
 
+/* HMAC over SHA1/SHA256 uses 64-byte block size. */
+enum { SHA2_INSIZE = 64 };
+
+typedef struct hmac_ctx_t {
+	md5sha_ctx_t hashed_key_xor_ipad;
+	md5sha_ctx_t hashed_key_xor_opad;
+} hmac_ctx_t;
+
+typedef void md5sha_begin_func(md5sha_ctx_t *ctx) FAST_FUNC;
+
+static inline void hmac_hash(hmac_ctx_t *ctx, const void *in, unsigned sz)
+{
+	md5sha_hash(&ctx->hashed_key_xor_ipad, in, sz);
+}
+
+void hmac_begin(hmac_ctx_t *ctx, const uint8_t *key, unsigned key_size,
+		md5sha_begin_func *begin) FAST_FUNC;
+unsigned hmac_end(hmac_ctx_t *ctx, uint8_t *out) FAST_FUNC;
+unsigned hmac_block(const uint8_t *key, unsigned key_size,
+		md5sha_begin_func *begin, const void *in, unsigned sz,
+		uint8_t *out) FAST_FUNC;
+void hmac_hash_v(hmac_ctx_t *ctx, va_list va) FAST_FUNC;
+unsigned hmac_peek_hash(hmac_ctx_t *ctx, uint8_t *out, ...) FAST_FUNC;
+
 extern uint32_t *global_crc32_table;
 uint32_t *crc32_filltable(uint32_t *tbl256, int endian) FAST_FUNC;
 uint32_t *crc32_new_table_le(void) FAST_FUNC;

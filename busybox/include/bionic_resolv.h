@@ -108,7 +108,7 @@ struct __res_state {
         struct res_static   rstatic[1];
 };
 
-#if defined(__ANDROID__) && !ENABLE_STATIC
+#if defined(__ANDROID__)
 static inline struct __res_state *__res_get_state(void)
 {
 	static struct __res_state state;

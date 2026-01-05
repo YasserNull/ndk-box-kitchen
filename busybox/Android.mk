@@ -3,7 +3,7 @@ VERSION = 1
 PATCHLEVEL = 36
 SUBLEVEL = 1
 MINORLEVEL := 1
-BB_VER := "$(VERSION).$(PATCHLEVEL).$(SUBLEVEL).$(MINORLEVEL) topjohnwu"
+BB_VER := "$(VERSION).$(PATCHLEVEL).$(SUBLEVEL).$(MINORLEVEL) YasserNull"
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := busybox
@@ -189,6 +189,8 @@ libbb/bb_getsockname.c \
 libbb/bb_pwd.c \
 libbb/bb_qsort.c \
 libbb/bb_strtonum.c \
+libbb/bitops.c \
+libbb/c_escape.c \
 libbb/capability.c \
 libbb/change_identity.c \
 libbb/chomp.c \
@@ -223,12 +225,14 @@ libbb/get_volsize.c \
 libbb/getopt32.c \
 libbb/getopt_allopts.c \
 libbb/getpty.c \
+libbb/hash_hmac.c \
 libbb/hash_md5_sha.c \
 libbb/hash_md5_sha256_x86-32_shaNI.S \
 libbb/hash_md5_sha256_x86-64_shaNI.S \
 libbb/hash_md5_sha_x86-32_shaNI.S \
 libbb/hash_md5_sha_x86-64.S \
 libbb/hash_md5_sha_x86-64_shaNI.S \
+libbb/hash_sha256_block.c \
 libbb/herror_msg.c \
 libbb/human_readable.c \
 libbb/in_ether.c \
@@ -261,6 +265,7 @@ libbb/perror_nomsg.c \
 libbb/perror_nomsg_and_die.c \
 libbb/pidfile.c \
 libbb/platform.c \
+libbb/poll_with_signals.c \
 libbb/print_flags.c \
 libbb/print_numbered_lines.c \
 libbb/printable.c \
