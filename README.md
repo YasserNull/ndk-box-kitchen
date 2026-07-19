@@ -9,7 +9,7 @@ This repo is the kitchen used to create headers and Makefiles for building BusyB
 - Clone repo:
 
 ```
-https://github.com/YasserNull/ndk-box-kitchen
+git clone https://github.com/YasserNull/ndk-box-kitchen
 cd ndk-box-kitchen
 ```
 
@@ -18,13 +18,13 @@ cd ndk-box-kitchen
 Build without selinux
 
 ```
-sh build.sh
+./build.sh
 ```
 
 Build with selinux
 
 ```
-sh build.sh selinux
+./build.sh selinux
 ```
 
 Or use run.sh:
