@@ -9,16 +9,11 @@ die() {
 # ndk-build lookup
 if command -v ndk-build >/dev/null 2>&1; then
     NDK_BUILD="$(command -v ndk-build)"
-    NDK="$(dirname "$NDK_BUILD")"
-elif [[ -n "${NDK:-}" && -x "$NDK/ndk-build" ]]; then
-    NDK_BUILD="$NDK/ndk-build"
-elif [[ -n "${ANDROID_NDK_HOME:-}" && -x "$ANDROID_NDK_HOME/ndk-build" ]]; then
-    NDK="$ANDROID_NDK_HOME"
-    NDK_BUILD="$ANDROID_NDK_HOME/ndk-build"
+elif [[ -n "${NDK_BUILD_PATH:-}" && -x "$NDK_BUILD_PATH" ]]; then
+    NDK_BUILD="$NDK_BUILD_PATH"
 else
-    die "ndk-build not found. Set NDK or ANDROID_NDK_HOME."
+    die "ndk-build not found. Set NDK_BUILD_PATH to the full path of ndk-build."
 fi
-
 FILES=(
     "busybox.config"
     "busybox/.config"
@@ -56,3 +51,4 @@ fi
 "$NDK_BUILD" clean
 "$NDK_BUILD" "$SELINUX" -j"$(nproc)"
 ./run.sh archive
+

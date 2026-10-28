@@ -4,7 +4,7 @@ This repo is the kitchen used to create headers and Makefiles for building BusyB
 
 ## Usage
 
-### Build :
+### Build
 
 - Clone repo:
 
@@ -13,7 +13,21 @@ git clone https://github.com/YasserNull/ndk-box-kitchen
 cd ndk-box-kitchen
 ```
 
-- Build options :
+- Init
+
+```
+git clone https://git.busybox.net/busybox/
+git clone https://android.googlesource.com/platform/external/selinux jni/selinux
+git clone https://android.googlesource.com/platform/external/pcre jni/pcre
+```
+
+- Set ndkbuild path
+
+```
+export NDK_BUILD_PATH=<path-to-ndkbuild>
+```
+
+- Build options
 
 Build without selinux
 
@@ -36,3 +50,4 @@ Or use run.sh:
 `$NDK/ndk-build -j$(nproc) selinux` to build the executables with selinux
 
 `./run.sh archive` to archive all built artifacts into `busybox.zip`
+
